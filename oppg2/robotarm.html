@@ -1,0 +1,58 @@
+<html>
+
+<head>
+
+</head>
+
+<body>
+
+    <div>
+        body angle -180 <input id="bodySlider" type="range" min="-180" max="180" step="10" value="0" />
+        180
+    </div><br />
+
+    <div>
+        lower arm angle -90 <input id="lArmSlider" type="range" min="-90" max="90" step="10" value="0" />
+        90
+    </div><br />
+
+    <div>
+        upper arm angle -160 <input id="uArmSlider" type="range" min="-160" max="160" step="10" value="0" />
+        160
+    </div><br />
+
+    <div>
+        claw angle 0 <input id="clawSlider" type="range" min="0" max="60" step="5" value="0" />
+        60
+    </div><br />
+
+    <div>
+        Velg den delen du vil styre, og styr med A-knappen (-grader) og D-knappen (+grader):
+        
+        <br />
+        (grader er ikkje satt noko som maks her...)
+        <br />
+        <select id="robotDel">
+            <option value="0">Base</option>
+            <option value="1">Lower arm</option>
+            <option value="2">Upper Arm</option>
+            <option value="3">Claw</option>
+        </select>
+    </div>
+    
+
+    <canvas id="gl-canvas" width="512" height="512">
+        Oops ... your browser doesn't support the HTML5 canvas element
+    </canvas>
+
+    <br />
+
+    <script type="text/javascript" src="./Common/initShaders2.js" defer></script>
+    <script type="text/javascript" src="./Common/MVnew.js" defer></script>
+    <script type="text/javascript" src="./robotarmdata.js" defer></script>
+    <script type="text/javascript" src="./robotarmgl.js" defer></script>
+    <script type="text/javascript" src="./robotarmcontroller.js" defer></script>
+    <script type="text/javascript" src="./robotarm.js" defer></script>
+</body>
+
+</html>
