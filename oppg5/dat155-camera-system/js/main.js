@@ -69,10 +69,11 @@ canvas.addEventListener('click', () => {
 
 let yaw = 0;
 let pitch = 0;
+let roll = 0;
 function updateCamRotation(event) {
     // Add mouse movement to the pitch and yaw variables so that we can update the camera rotation in the loop below.
-    yaw -= event.movementX * 0.001;
-    pitch -= event.movementY * 0.001;
+    yaw -= event.movementX * 0.01;
+    pitch -= event.movementY * 0.01;
 }
 
 document.addEventListener('pointerlockchange', () => {
@@ -89,6 +90,8 @@ let move = {
     backward: false,
     left: false,
     right: false,
+    rollLeft: false,
+    rollRight: false,
     speed: 0.005
 };
 
@@ -102,6 +105,10 @@ window.addEventListener('keydown', (e) => {
         move.left = true;
     } else if (e.code === 'KeyD') {
         move.right = true;
+    } else if (e.code === 'KeyQ') {
+        move.rollLeft = true;
+    } else if (e.code === 'KeyE') {
+        move.rollRight = true;
     }
 });
 
@@ -115,6 +122,10 @@ window.addEventListener('keyup', (e) => {
         move.left = false;
     } else if (e.code === 'KeyD') {
         move.right = false;
+    } else if (e.code === 'KeyQ') {
+        move.rollLeft = false;
+    } else if (e.code === 'KeyE') {
+        move.rollRight = false;
     }
 });
 
@@ -140,18 +151,23 @@ function loop(now) {
     }
 
     if (move.right) {
-        // TODO: implement movement
         vec3.add(velocity, velocity, vec3.fromValues(moveSpeed, 0.0, 0.0));
     }
 
     if (move.forward) {
-        // TODO: implement movement
         vec3.add(velocity, velocity, vec3.fromValues(0.0, 0.0, -moveSpeed));
     }
 
     if (move.backward) {
-        // TODO: implement movement
         vec3.add(velocity, velocity, vec3.fromValues(0.0, 0.0, moveSpeed));
+    }
+
+    if (move.rollLeft) {
+        roll -= 1.0;
+    }
+
+    if (move.rollRight) {
+        roll += 1.0;
     }
 
     //ferdig^^^?
@@ -159,7 +175,7 @@ function loop(now) {
     // ... (add a case for move.forward and move.backward)
 
     // Given the accumulated mouse movement this frame, use the mouse look controller to calculate the new rotation of the camera.
-    mouseLookController.update(pitch, yaw); // TODO: implement code in MouseLookController
+    mouseLookController.update(pitch, yaw, roll); // TODO: implement code in MouseLookController
 
     // Camera rotation is represented as a quaternion.
     // We rotate the velocity vector based on its rotation in order to translate along the direction we're looking.
@@ -174,6 +190,7 @@ function loop(now) {
     // Reset mouse movement accumulator every frame.
     yaw = 0;
     pitch = 0;
+    roll = 0;
 
     // Update the world matrices of the entire scene graph.
     scene.update();

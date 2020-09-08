@@ -23,12 +23,15 @@ export default class MouseLookController {
         this.yaw = 0;
     }
 
-    update(pitch, yaw) {
+    update(pitch, yaw, roll) {
 
-        this.camera.rotateY(yaw);
-        this.camera.rotateX(pitch);
+        //this.pitch += pitch;
+        //this.yaw += yaw;
 
-        //er vel ikkje dette eg skal gjere lol^
+        //quat.fromEuler(this.camera.rotation, this.pitch, this.yaw, 0.0);
+
+        //this.camera.rotateY(yaw);
+        //this.camera.rotateX(pitch);
 
         // TODO: implement update.
         // This function receives the amount of pitch and yaw (in radians) that the camera is supposed to be rotated (in addition to its current rotation).
@@ -38,6 +41,8 @@ export default class MouseLookController {
 
         // or if you want to add rotation, like this:
         // quat.multiply(this.camera.rotation, this.camera.rotation, quat.fromEuler(this.camera.rotation, x_angle, y_angle, z_angle));
+
+        quat.multiply(this.camera.rotation, this.camera.rotation, quat.fromEuler(quat.create(), pitch, yaw, roll));
 
     }
     
